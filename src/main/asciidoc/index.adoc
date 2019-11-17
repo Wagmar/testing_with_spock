@@ -1,0 +1,127 @@
+= Exemplo API Com spockframework
+@user.name@ <dev@riocard.com>
+v@project.version@.@buildNumber@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 5
+:sectlinks:
+
+[introduction]
+= Introdução
+
+API Exemplo
+
+
+== HTTP status codes
+
+Códigos de Status HTTP utilizados no Proxy:
+
+|===
+| Status code | Usage
+
+| `200 OK`
+| Requisição bem-sucedida
+
+| `400 Bad Request`
+| Código informado quando ocorrer um erro na validação de parâmetros
+
+| `500 Internal Server Error`
+| Código informado quando ocorrer um erro na execução dos serviços.
+|===
+
+[[services]]
+= Serviços
+
+[[consulta-cartao-valido]]
+
+
+:sectnums:
+== Consulta de um cartão
+
+=== Consulta Cliente Válida
+
+*Requisição*
+
+include::{snippets}/consulta-cpf-valido/request-fields.adoc[]
+
+include::{snippets}/consulta-cpf-valido/curl-request.adoc[]
+
+*Resposta*
+
+include::{snippets}/consulta-cpf-valido/response-fields.adoc[]
+
+include::{snippets}/consulta-cpf-valido/http-response.adoc[]
+
+=== Consulta Cliente não existente
+
+*Requisição*
+
+include::{snippets}/consulta-cpf-invalido/request-fields.adoc[]
+
+include::{snippets}/consulta-cpf-invalido/curl-request.adoc[]
+
+*Resposta*
+
+include::{snippets}/consulta-cpf-invalido/response-fields.adoc[]
+
+include::{snippets}/consulta-cpf-invalido/http-response.adoc[]
+
+=== Atualizar Cliente
+
+*Requisição*
+
+include::{snippets}/atualizar-cliente/request-fields.adoc[]
+
+include::{snippets}/atualizar-cliente/curl-request.adoc[]
+
+*Resposta*
+
+include::{snippets}/atualizar-cliente/response-fields.adoc[]
+
+include::{snippets}/atualizar-cliente/http-response.adoc[]
+
+
+=== Atualiza Cliente CPF não encontado
+
+*Requisição*
+
+include::{snippets}/atualizar-cliente-cpf-nao-encontrado/request-fields.adoc[]
+
+include::{snippets}/atualizar-cliente-cpf-nao-encontrado//curl-request.adoc[]
+
+*Resposta*
+
+include::{snippets}/atualizar-cliente-cpf-nao-encontrado//response-fields.adoc[]
+
+include::{snippets}/atualizar-cliente-cpf-nao-encontrado//http-response.adoc[]
+
+
+== Exemplo de uma chamada a um web service
+nesse teste tem um exemplo de mock de web service
+
+*Requisição*
+
+include::{snippets}/call_web_service/curl-request.adoc[]
+
+*Resposta*
+
+include::{snippets}/call_web_service/response-fields.adoc[]
+
+include::{snippets}/call_web_service/http-response.adoc[]
+
+
+== Exemplo de uma chamada a um web Controller
+
+*Requisição*
+
+include::{snippets}/index/curl-request.adoc[]
+include::{snippets}/index/http-request.adoc[]
+
+*Reposta*
+include::{snippets}/index/http-response.adoc[]
+include::{snippets}/index/httpie-request.adoc[]
+
+*Corpo da Resposta*
+include::{snippets}/index/response-body.adoc[]

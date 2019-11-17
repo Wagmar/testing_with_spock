@@ -1,0 +1,22 @@
+= Testing With Spock Framework
+:author: Wagmar Queiroga
+:email: <wagmar.queiroga@riocardmais.com.br>
+:revnumber: 1.0
+:doctype: article
+:icons: font
+:source-highlighter: highlightjs
+:sectnums:
+:autofit-option:
+:bootVersion: 2.1.8.RELEASE
+
+### Reference Documentation
+For further reference, please consider the following sections:
+
+* link:https://docs.gradle.org[Official Gradle documentation]
+* link:https://docs.spring.io/spring-boot/docs/{bootVersion}/gradle-plugin/reference/html/[Spring Boot Gradle Plugin Reference Guide]
+* link:https://docs.spring.io/spring-boot/docs/{bootVersion}/reference/htmlsingle/#using-boot-devtools[Spring Boot DevTools]
+* link:https://mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/[MyBatis Framework]
+* link:https://docs.spring.io/spring-boot/docs/{bootVersion}/reference/htmlsingle/#production-ready[Spring Boot Actuator]
+* link:https://docs.spring.io/spring-boot/docs/{bootVersion}/reference/htmlsingle/#boot-features-developing-web-applications[Spring Web]
+* link:http://spockframework.org/spock/docs/1.3/index.html[Spock Frameworck]
+

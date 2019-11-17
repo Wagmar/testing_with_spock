@@ -1,0 +1,5 @@
+
+# Lista dos DMLs na ordem em que devem ser aplicados
+
+
+data/cliente.sql

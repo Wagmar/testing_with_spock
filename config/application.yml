@@ -1,0 +1,22 @@
+spring:
+  messages:
+    basename: messages
+  datasource:
+    url: jdbc:mysql://localhost:3306
+    password: admin
+    username: admin
+    driverClassName: com.mysql.jdbc.Driver #com.mysql.cj.jdbc.Driver
+#  mvc:
+#    view:
+#      prefix: /templates/
+#      suffix: .html
+
+mybatis:
+   config-location: classpath:sqlMap/mybatis-config.xml
+   configuration-properties:
+       sql.qualifier.wagmar: WAGMAR
+       sql.qualifier.teste: teste
+
+logging:
+  file: exemplo.log
+

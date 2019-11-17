@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mybatis.Cliente">
+
+    <resultMap id="clienteResult" type="com.exemplo.domain.Cliente">
+        <result property="cpf" column="nr_cpf"/>
+        <result property="nome" column="nm_cliente"/>
+
+    </resultMap>
+
+    <select id="buscar"
+            resultMap="mybatis.Cliente.clienteResult"
+            parameterType="long">
+        SELECT nr_cpf,
+               nm_cliente
+          FROM ${sql.qualifier.wagmar}.cliente
+         WHERE nr_cpf = #{value}
+    </select>
+    <update id="atualizar" parameterType="com.exemplo.domain.Cliente">
+        update ${sql.qualifier.wagmar}.cliente
+           set nm_cliente = #{nome}
+         where nr_cpf = #{cpf}
+    </update>
+
+</mapper>
