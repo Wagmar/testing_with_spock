@@ -1,7 +1,7 @@
-package com.examplo.configTest
+package com.example.configTest
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.exemplo.ExemploApplication
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs
@@ -19,7 +19,7 @@ import spock.lang.Specification
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields
 
-@SpringBootTest(classes = ExemploApplication.class)
+@SpringBootTest(classes = ExemploApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase
 @ContextConfiguration(initializers = TestApplicationContextInitializer)
 @TestPropertySource(locations = ['classpath:test.properties'])

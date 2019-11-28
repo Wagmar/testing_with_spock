@@ -1,6 +1,6 @@
-package com.examplo.service
+package com.example.service
 
-import com.examplo.configTest.ConfigTest
+import com.example.configTest.ConfigTest
 import org.json.JSONObject
 import org.springframework.http.HttpMethod
 import org.springframework.http.MediaType

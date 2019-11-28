@@ -15,10 +15,10 @@ class ConsultaWebServiceImplTest extends Specification {
             def  restTemplate = Mock(RestTemplate){
                 postForObject(_, _, _) >>  { throw new HttpClientErrorException(HttpStatus.BAD_REQUEST) }
             }
-        def comsulta = new ConsultaWebServiceImpl(restTemplate)
+        def consulta = new ConsultaWebServiceImpl(restTemplate)
         when:
-        comsulta.callWebService(objectRequest)
+        consulta.callWebService(objectRequest)
         then:
-        thrown(ApiExceptions)
+        def e = thrown(ApiExceptions)
     }
 }

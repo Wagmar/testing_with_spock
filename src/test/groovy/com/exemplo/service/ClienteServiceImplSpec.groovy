@@ -12,20 +12,24 @@ class ClienteServiceImplSpec extends Specification {
 
     @Unroll
     def "test buscar cliente: #cliente"() {
-        given:
+        given: 'criando cliente para teste'
         def repository = Mock(ClienteRepository){
-            buscar(_) >> Cliente.builder().cpf(111111111l).nome('Corey Taylor').build()
+            buscar(_) >> cliente
         }
         def service = new ClienteServiceImpl(repository)
 
-        when:
+        when: 'buscando o cliente'
          def corey = service.buscar(cliente)
-        then:
+        then: 'verificação do cliente'
          corey != null
+        and: 'verificação do cpf'
+         corey.cpf == 111111111l
+        and: 'verificação do nome'
+        corey.nome == 'Corey Taylor'
 
-        where:
-        cliente | tt
-        Cliente.builder().cpf(111111111).build() | _
+        where: 'Onde cliente'
+        cliente      | tt
+        getCorey()   | _
     }
 
     def "test atualizar"() {
@@ -46,5 +50,12 @@ class ClienteServiceImplSpec extends Specification {
         and: 'Validando a messagem da exceçao'
         e.getMessage() == 'Cliente não encontrado.'
         0 * sqlSession.update(1,_)
+    }
+
+    def getCorey(){
+        def cliente  = new Cliente();
+        cliente.setCpf(111111111)
+        cliente.setNome('Corey Taylor')
+        return  cliente
     }
 }

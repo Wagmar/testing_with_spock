@@ -1,11 +1,12 @@
-package com.examplo.service
+package com.example.service
 
-import com.examplo.configTest.ConfigTest
+import com.example.configTest.ConfigTest
 import org.json.JSONObject
 import org.springframework.http.MediaType
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
+import spock.lang.Shared
 import spock.lang.Unroll
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
@@ -13,36 +14,39 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.*
 
 class ExampleSpec extends ConfigTest {
 
+    @Shared sql = jdbcTemplate
+
     def setupSpec(){
         println()
-        println("setup executado apenas uma vez no inicio da classe do teste ")
+        println("sql está null: "+sql)
         println()
     }
-//
-//    def setup(){
-//        println("setup antes de cada metodo")
-//        println()
-//    }
-//
-//    def cleanup(){
-//        println("setup no final de cada metodo")
-//        println()
-//    }
-//
-//    def cleanupSpec(){
-//        println()
-//        println("setup executado apenas uma vez no final da classe do teste ")
-//        println()
-//    }
+
+    def setup(){
+        println("setup antes de cada metodo")
+        jdbcTemplate.execute("""UPDATE wagmar.cliente set nm_cliente = 'teste' where nr_cpf = 11980904881""")
+        println()
+    }
+
+    def cleanup(){
+        println("setup no final de cada metodo")
+        println()
+    }
+
+    def cleanupSpec(){
+        println()
+        println("setup executado apenas uma vez no final da classe do teste ")
+        println()
+    }
 
     @Unroll
     def '001 - Buscar Cliente com o cpf: #cpf '(){
 
         given:
-        def requestFieldss = requestFields(
+        def requestFields = requestFields(
                 fieldWithPath("cpf").description("Numero CPF do Cliente")
         )
-        def responseFieldss = responseFields(
+        def responseFields = responseFields(
                 fieldWithPath("data.cpf").description("Numero CPF cartão"),
                 fieldWithPath("data.nome").description("Nome do Cliente")
         )
@@ -58,11 +62,11 @@ class ExampleSpec extends ConfigTest {
         if(cartaoOK){
             response
                     .andExpect(MockMvcResultMatchers.status().is(status))
-                    .andDo(document( snippetId ,  requestFieldss , responseFieldss ))
+                    .andDo(document( snippetId ,  requestFields , responseFields ))
         } else {
             response
                     .andExpect(MockMvcResultMatchers.status().is(status))
-                    .andDo(document( snippetId ,  requestFieldss , responseNotFound))
+                    .andDo(document( snippetId ,  requestFields , responseNotFound))
         }
 
         where:
@@ -77,7 +81,7 @@ class ExampleSpec extends ConfigTest {
         given:
         def json = [ "cpf" : cpf , "nome": nome ]
         def request = new JSONObject(json)
-        def         requestFieldss = requestFields(
+        def         requestFields = requestFields(
                 fieldWithPath("cpf").description("Numero do CPF cartão"),
                 fieldWithPath("nome").description("Nome do Cliente")
         )
@@ -92,16 +96,15 @@ class ExampleSpec extends ConfigTest {
         if(OK){
             response
                     .andExpect(MockMvcResultMatchers.status().is(status))
-                    .andDo(document( snippetId ,  requestFieldss, responseFields(
+                    .andDo(document( snippetId ,  requestFields, responseFields(
                             fieldWithPath("code").description("Código de retorno")) ))
 
             and:
             jdbcTemplate.queryForObject("""SELECT nm_cliente FROM wagmar.cliente where nr_cpf = $cpf""", String.class) == nome
-
         } else {
             response
                     .andExpect(MockMvcResultMatchers.status().is(status))
-                    .andDo(document( snippetId ,  requestFieldss , responseNotFound))
+                    .andDo(document( snippetId ,  requestFields , responseNotFound))
         }
 
         where:

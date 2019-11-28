@@ -1,4 +1,4 @@
-package com.examplo.configTest
+package com.example.configTest
 
 import org.springframework.context.ApplicationContextInitializer
 import org.springframework.context.ConfigurableApplicationContext

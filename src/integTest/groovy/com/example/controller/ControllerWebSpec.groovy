@@ -1,6 +1,6 @@
-package com.examplo.controller
+package com.example.controller
 
-import com.examplo.configTest.ConfigTest
+import com.example.configTest.ConfigTest
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
@@ -34,6 +34,6 @@ class ControllerWebSpec extends ConfigTest {
 
         where:
         snippetId                   | usuario
-        'consulta-usuario-valido'   | 'Rhuan'
+        'consulta-usuario-valido'   | 'Soujava'
     }
 }
