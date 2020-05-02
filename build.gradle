@@ -1,14 +1,26 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.1.9.RELEASE'
+	}
+}
+
+
 plugins {
-	id 'org.springframework.boot' version '2.1.8.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
-	id 'org.asciidoctor.convert' version '1.5.8'
 	id 'java'
 	id 'jacoco'
 	id 'groovy'
+	id "org.asciidoctor.convert" version "1.5.9.2"
 	id 'nebula.integtest' version '5.0.0'
-	id "nebula.release" version "8.0.3"
+	id 'nebula.release' version '13.0.0'
 	id 'nebula.lint' version '9.3.4'
 	id 'org.sonarqube' version '2.6.2'
+}
+apply {
+	 plugin 'org.springframework.boot'
+	 plugin 'io.spring.dependency-management'
 }
 
 
@@ -21,6 +33,7 @@ ext {
 	spockFrameworkVersion = '1.2-groovy-2.5'
 	spockReportsVersion = '1.6.1'
 }
+ext['spring-restdocs.version'] = '2.0.4.RELEASE'
 
 group = 'com.exemplo'
 sourceCompatibility = '1.8'
@@ -50,6 +63,7 @@ repositories {
 
 
 dependencies {
+	asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 	implementation ('org.springframework.boot:spring-boot-starter-actuator')
 	implementation ('org.springframework.boot:spring-boot-starter-web')
 	implementation ('org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.0')
@@ -124,6 +138,10 @@ test {
 asciidoctor {
 	inputs.dir snippetsDir
 	dependsOn test
+	dependsOn integrationTest
+//	attributes revnumber : version.toString()
+	setAttributes([username : 'teste', revnumber : version.toString()])
+
 }
 
 gradleLint {
@@ -149,9 +167,21 @@ jacocoTestReport {
 	}
 }
 
+bootJar {
+	dependsOn asciidoctor
+
+	processResources {
+		from ("${asciidoctor.outputDir}/html5") {
+			into 'static/docs'
+		}
+	}
+}
+
 sonarqube {
 	properties {
 		property 'sonar.projectName', "$name"
 		property 'sonar.projectKey', "$group:apresentacao"
 	}
 }
+
+
