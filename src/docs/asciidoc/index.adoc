@@ -1,6 +1,6 @@
 = Exemplo API Com spockframework
-@user.name@ <dev@riocard.com>
-v@project.version@.@buildNumber@
+@username@ <dev@riocard.com>
+v@project-version@
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
