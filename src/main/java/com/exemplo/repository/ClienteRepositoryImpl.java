@@ -11,6 +11,8 @@ import org.slog4j.SLogger;
 import org.slog4j.SLoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Repository
 public class ClienteRepositoryImpl implements ClienteRepository {
@@ -21,8 +23,8 @@ public class ClienteRepositoryImpl implements ClienteRepository {
     private final SqlSession sqlSession;
 
     @Override
-    public Cliente buscar(Cliente cartao){
-        return sqlSession.selectOne("mybatis.Cliente.buscar", cartao.getCpf());
+    public Optional<Cliente> buscar(Cliente cartao){
+        return Optional.ofNullable(sqlSession.selectOne("mybatis.Cliente.buscar", cartao.getCpf()));
     }
 
     @Override

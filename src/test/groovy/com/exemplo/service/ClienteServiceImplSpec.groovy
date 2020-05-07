@@ -14,7 +14,7 @@ class ClienteServiceImplSpec extends Specification {
     def "test buscar cliente: #cliente"() {
         given: 'criando cliente para teste'
         def repository = Mock(ClienteRepository){
-            buscar(_) >> cliente
+            buscar(_) >> Optional.ofNullable(cliente)
         }
         def service = new ClienteServiceImpl(repository)
 
@@ -25,11 +25,11 @@ class ClienteServiceImplSpec extends Specification {
         and: 'verificação do cpf'
          corey.cpf == 111111111l
         and: 'verificação do nome'
-        corey.nome == 'Corey Taylor'
+         corey.nome == 'Corey Taylor'
 
         where: 'Onde cliente'
-        cliente      | tt
-        getCorey()   | _
+        cliente                    | tt
+        getCliente('Corey Taylor') | _
     }
 
     def "test atualizar"() {
@@ -52,10 +52,10 @@ class ClienteServiceImplSpec extends Specification {
         0 * sqlSession.update(1,_)
     }
 
-    def getCorey(){
+    def getCliente(String name){
         def cliente  = new Cliente();
         cliente.setCpf(111111111)
-        cliente.setNome('Corey Taylor')
+        cliente.setNome(name)
         return  cliente
     }
 }
