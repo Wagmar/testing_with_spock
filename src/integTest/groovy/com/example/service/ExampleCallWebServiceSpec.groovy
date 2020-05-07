@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class ExampleCallWebServiceSpec extends ConfigTest {
 
     MockRestServiceServer mockServer
-    private static final String URL_PUSH = "http://10.5.44.62:6011/banana"
+    private static final String URL_PUSH = "http://192.168.0.1:6011/banana"
 
     def '001 - deve chamar web service'(){
         given: 'Adiconando dados para o teste'

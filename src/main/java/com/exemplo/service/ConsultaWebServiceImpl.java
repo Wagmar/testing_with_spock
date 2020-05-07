@@ -16,7 +16,7 @@ import static com.exemplo.error.Errors.WEB_SERVICE_NAO_RESPONDE;
 @Slf4j
 public class ConsultaWebServiceImpl implements CallWebService {
 
-    private static final String URL = "http://10.5.44.62:6011/banana";
+    private static final String URL = "http://192.168.0.1:6011/banana";
 
     private final RestTemplate restTemplate;
 
@@ -26,7 +26,7 @@ public class ConsultaWebServiceImpl implements CallWebService {
         try {
             response = restTemplate.postForObject(URL, objectRequest, ObjectResponse.class);
         }catch (HttpClientErrorException e){
-            log.error("Erro na consulta do WS %s", URL);
+            log.error(String.format("Erro na consulta do WS %s,", URL));
             throw new ApiExceptions(WEB_SERVICE_NAO_RESPONDE);
         }
         return response;
