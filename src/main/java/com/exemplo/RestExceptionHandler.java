@@ -49,14 +49,18 @@ public class RestExceptionHandler {
     @ExceptionHandler({NoHandlerFoundException.class, ClienteInvalido.class})
     @ResponseStatus(value=HttpStatus.NOT_FOUND)
     @ResponseBody
-    public ResponseEntity<String> handle404() {
+    public ResponseEntity<ApiError> handle404(Exception ex) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-
-        String json = "{ \"data\": {\"error\":\"Resource not found.\"} }";
-
-        return new ResponseEntity<String>(json, headers, HttpStatus.NOT_FOUND);
+        ApiError build;
+        if(ex instanceof ApiExceptions){
+            build = ApiError.builder().code(((ApiExceptions) ex).getError().code()).message(ex.getMessage()).build();
+        }else{
+             build = ApiError.builder().message(ex.getMessage()).build();
+        }
+        return  ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body(build);
     }
+
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @ExceptionHandler({
              BindException.class,

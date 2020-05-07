@@ -68,6 +68,20 @@ include::{snippets}/consulta-cpf-invalido/response-fields.adoc[]
 
 include::{snippets}/consulta-cpf-invalido/http-response.adoc[]
 
+=== Consulta Cliente cpf nulo
+
+*Requisição*
+
+include::{snippets}/consulta-cpf-null/request-fields.adoc[]
+
+include::{snippets}/consulta-cpf-null/curl-request.adoc[]
+
+*Resposta*
+
+include::{snippets}/consulta-cpf-null/response-fields.adoc[]
+
+include::{snippets}/consulta-cpf-null/http-response.adoc[]
+
 === Atualizar Cliente
 
 *Requisição*

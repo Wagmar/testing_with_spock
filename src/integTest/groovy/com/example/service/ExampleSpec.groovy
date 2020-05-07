@@ -59,21 +59,21 @@ class ExampleSpec extends ConfigTest {
         ).andDo(MockMvcResultHandlers.print())
 
         then:
-        if(cartaoOK){
+        if(requestOK){
             response
                     .andExpect(MockMvcResultMatchers.status().is(status))
                     .andDo(document( snippetId ,  requestFields , responseFields ))
         } else {
             response
                     .andExpect(MockMvcResultMatchers.status().is(status))
-                    .andDo(document( snippetId ,  requestFields , responseNotFound))
+                    .andDo(document( snippetId ,  requestFields , responseBody))
         }
 
         where:
-        snippetId               | cpf             | status    | cartaoOK
-        'consulta-cpf-valido'   | 11980904881     | 200       | true
-        'consulta-cpf-invalido' | 9980904881      | 404       | false
-
+        snippetId               | cpf             | status    | requestOK | responseBody
+        'consulta-cpf-valido'   | 11980904881     | 200       | true      | _
+        'consulta-cpf-invalido' | 9980904881      | 404       | false     |  respFild(["code": "1002", "message":"Cliente não encontrado"])
+        'consulta-cpf-null'     | null            | 400       | false     |  respFild(["code": "Codigo de erro da requisição", "message":"Mensagem da requisição", "errors": "Erros", "errors[0].message":"Mensagem", "errors[0].fieldName":"Parâmetro"])
     }
 
     @Unroll
@@ -104,14 +104,12 @@ class ExampleSpec extends ConfigTest {
         } else {
             response
                     .andExpect(MockMvcResultMatchers.status().is(status))
-                    .andDo(document( snippetId ,  requestFields , responseNotFound))
+                    .andDo(document( snippetId ,  requestFields , responseBody))
         }
 
         where:
-        snippetId                              | cpf          | nome                 | status  | OK
-        'atualizar-cliente'                    | 11980904881  | 'João Pedro'         | 200     | true
-        'atualizar-cliente-cpf-nao-encontrado' | 9980904881   | "Maria do Rosário"   | 404     | false
-
+        snippetId                              | cpf          | nome                 | status  | OK    | responseBody
+        'atualizar-cliente'                    | 11980904881  | 'João Pedro'         | 200     | true  | _
+        'atualizar-cliente-cpf-nao-encontrado' | 9980904881   | "Maria do Rosário"   | 404     | false | respFild("code" : "Codigo de erro da requisição", "message":"Mensagem da requisição")
     }
-
 }

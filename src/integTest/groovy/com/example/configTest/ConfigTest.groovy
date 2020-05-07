@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.restdocs.payload.FieldDescriptor
 import org.springframework.restdocs.payload.ResponseFieldsSnippet
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.TestPropertySource
@@ -43,5 +44,14 @@ abstract class ConfigTest extends Specification{
     ResponseFieldsSnippet responseNotFound = responseFields(
             fieldWithPath("data.error").description("Recurso não encontrado")
     )
+
+    def respFild(def map ) {
+        List<FieldDescriptor> list = new ArrayList<>()
+        map.each { key, val ->
+            list.add(fieldWithPath((String)key).description(val))
+        }
+        ResponseFieldsSnippet responseNotFound = responseFields(list)
+        return responseNotFound
+    }
 
 }
