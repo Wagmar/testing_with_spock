@@ -20,8 +20,6 @@ public class ClienteValidator implements Validator {
         if (target == null || !(target instanceof Cliente)) {
             return ;
         }
-
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "cpf", "erro.numero.chip.nao.informado");
-
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "cpf", "erro.numero.cpf.nao.informado");
     }
 }
