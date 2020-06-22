@@ -17,7 +17,7 @@ pipeline {
 
             steps {
                 gitlabCommitStatus(name: 'build') {
-                    sh './mvnw --batch-mode clean package'
+                    sh './gradlew --info --stacktrace clean build'
                 }
             }
 
@@ -47,7 +47,7 @@ pipeline {
                     steps {
                         gitlabCommitStatus(name: 'sonarqube') {
                             withSonarQubeEnv('SonarQube Server') {
-                                sh './mvnw sonar:sonar'
+                                sh './gradlew --info --stacktrace sonarqube -x test'
                             }
                             timeout(time: 5, unit: 'MINUTES') {
                                 script {
@@ -64,7 +64,7 @@ pipeline {
         stage('Publish') {
             steps {
                 gitlabCommitStatus(name: 'publish') {
-                    sh './mvnw --batch-mode deploy -DskipTests -DupdateReleaseInfo=true'
+                    sh './gradlew --info --stacktrace publish -x jar'
                 }
             }
         }
