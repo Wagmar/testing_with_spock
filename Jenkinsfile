@@ -7,7 +7,7 @@ pipeline {
 
     options {
         timestamps()
-        gitLabConnection('gl-con1')
+        gitLabConnection('congit')
         gitlabBuilds(builds: ['build', 'jacoco','sonarqube', 'publish'])
     }
 
