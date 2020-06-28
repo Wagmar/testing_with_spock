@@ -11,11 +11,12 @@ class ConsultaWebServiceImplTest extends Specification {
 
     def "test callWebService"() {
         given:
+            def url = 'http://192.168.0.1:6011/banana'
             def objectRequest = new ObjectRequest(1215465654)
             def  restTemplate = Mock(RestTemplate){
                 postForObject(_, _, _) >>  { throw new HttpClientErrorException(HttpStatus.BAD_REQUEST) }
             }
-        def consulta = new ConsultaWebServiceImpl(restTemplate)
+        def consulta = new ConsultaWebServiceImpl(url,restTemplate)
         when:
         consulta.callWebService(objectRequest)
         then:
