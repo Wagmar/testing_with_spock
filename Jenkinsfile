@@ -22,13 +22,13 @@ pipeline {
             }
 
             post {
-//                 always {
-//                     junit 'target/surefire-reports/*.xml'
-//                 }
+                always {
+                    junit 'build/test-results/test/*.xml'
+                }
                 success {
                     script {
-                        def props = readProperties file: 'target/classes/custom.properties'
-                        currentBuild.description = props['app.version']
+                        def props = readProperties file: 'build/resources/main/META-INF/build-info.properties'
+                        currentBuild.description = props['build.version']
                     }
                 }
             }
@@ -37,30 +37,30 @@ pipeline {
         stage('Code Coverage') {
             steps {
                 gitlabCommitStatus(name: 'jacoco') {
-                    step([$class: 'JacocoPublisher', execPattern: 'target/coverage-reports/jacoco-unit.exec',
-                            classPattern: 'target/classes', sourcePattern: 'src/main/java'])
+                    step([$class: 'JacocoPublisher', execPattern: 'build/jacoco/test.exec',
+                            classPattern: 'build/classes', sourcePattern: 'src/main/java'])
                 }
             }
         }
 
-//        stage('Static Code Analysis') {
-//                    steps {
-//                        gitlabCommitStatus(name: 'sonarqube') {
-//                            withSonarQubeEnv('SonarQube Server') {
-//                                sh './gradlew --info --stacktrace sonarqube -x test'
-//                            }
-//                            timeout(time: 5, unit: 'MINUTES') {
-//                                script {
-//                                    def qualitygate = waitForQualityGate()
-//                                     if (qualitygate.status != "OK") {
-//                                         error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
-//                                     }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//
+       stage('Static Code Analysis') {
+                   steps {
+                       gitlabCommitStatus(name: 'sonarqube') {
+                           withSonarQubeEnv('SonarQube Server') {
+                               sh './gradlew --info --stacktrace sonarqube -x test'
+                           }
+                           timeout(time: 5, unit: 'MINUTES') {
+                               script {
+                                   def qualitygate = waitForQualityGate()
+                                    if (qualitygate.status != "OK") {
+                                        error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
+                                    }
+                               }
+                           }
+                       }
+                   }
+               }
+
         stage('Publish') {
             steps {
                 gitlabCommitStatus(name: 'publish') {
