@@ -17,7 +17,7 @@ public class ClienteValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
 
-        if (target == null || !(target instanceof Cliente)) {
+        if (!(target instanceof Cliente)) {
             return ;
         }
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "cpf", "erro.numero.cpf.nao.informado");
