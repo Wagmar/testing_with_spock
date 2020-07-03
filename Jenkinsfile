@@ -80,8 +80,11 @@ pipeline {
                         def props = readProperties file: 'build/resources/main/META-INF/build-info.properties'
                         def version = props['build.version']
                         def artifactName = props['build.name']
+                        println("createControl")
                         createControl(name,version)
+                        println("createConf")
                         createConf(name)
+                        println("createFolder")
                         createFolder(name,"msa")
                         createFolder(name,"logs")
                         sh "cp build/libs/rcserver* build/deploy/riocard/msa/$artifactName"
