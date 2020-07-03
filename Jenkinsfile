@@ -128,40 +128,40 @@ pipeline {
     options {
         timestamps()
         gitLabConnection('gl-con1')
-        gitlabBuilds(builds: ['build', 'jacoco', 'deploy'])
+        gitlabBuilds(builds: ['deploy'])
     }
 
     stages {
 
-        stage('Build') {
+//         stage('Build') {
+//
+//             steps {
+//                 gitlabCommitStatus(name: 'build') {
+//                     sh './gradlew --info --stacktrace clean build'
+//                 }
+//             }
+//
+//             post {
+//                 always {
+//                     junit 'build/test-results/test/*.xml'
+//                 }
+//                 success {
+//                     script {
+//                         def props = readProperties file: 'build/resources/main/META-INF/build-info.properties'
+//                         currentBuild.description = 'v' + props['build.version']
+//                     }
+//                 }
+//             }
+//         }
 
-            steps {
-                gitlabCommitStatus(name: 'build') {
-                    sh './gradlew --info --stacktrace clean build'
-                }
-            }
-
-            post {
-                always {
-                    junit 'build/test-results/test/*.xml'
-                }
-                success {
-                    script {
-                        def props = readProperties file: 'build/resources/main/META-INF/build-info.properties'
-                        currentBuild.description = 'v' + props['build.version']
-                    }
-                }
-            }
-        }
-
-        stage('Code Coverage') {
-            steps {
-                gitlabCommitStatus(name: 'jacoco') {
-                    step([$class: 'JacocoPublisher', execPattern: 'build/jacoco/test.exec',
-                            classPattern: 'build/classes/java', sourcePattern: 'src/main/java'])
-                }
-            }
-        }
+//         stage('Code Coverage') {
+//             steps {
+//                 gitlabCommitStatus(name: 'jacoco') {
+//                     step([$class: 'JacocoPublisher', execPattern: 'build/jacoco/test.exec',
+//                             classPattern: 'build/classes/java', sourcePattern: 'src/main/java'])
+//                 }
+//             }
+//         }
 
 //         stage('Static Code Analysis') {
 //             steps {
@@ -201,12 +201,12 @@ pipeline {
                         def version = props['build.version']
                         def artifactName = props['build.name']
                         println("createControl")
-                        createControl($name, $version)
+                        createControl('teste', '1.0.0')
                         println("createConf")
-                        createConf($name)
+                        createConf('teste')
                         println("createFolder")
-                        createFolder($name,"msa")
-                        createFolder($name,"logs")
+                        createFolder('teste',"msa")
+                        createFolder('teste',"logs")
                         sh "cp build/libs/rcserver* build/deploy/riocard/msa/$artifactName"
                     }
                 }
