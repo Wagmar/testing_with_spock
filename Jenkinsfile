@@ -81,12 +81,12 @@ pipeline {
                         def version = props['build.version']
                         def artifactName = props['build.name']
                         println("createControl")
-                        createControl(name,version)
+                        createControl($name, $version)
                         println("createConf")
-                        createConf(name)
+                        createConf($name)
                         println("createFolder")
-                        createFolder(name,"msa")
-                        createFolder(name,"logs")
+                        createFolder($name,"msa")
+                        createFolder($name,"logs")
                         sh "cp build/libs/rcserver* build/deploy/riocard/msa/$artifactName"
                     }
                 }
