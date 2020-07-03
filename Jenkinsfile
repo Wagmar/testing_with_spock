@@ -95,7 +95,7 @@ pipeline {
     }
 
 }
-    def createControl(nome, version){
+    def createControl(String nome, String version){
             println("inicio createControl")
             def dir = new File("build/deploy/DEBIAN/")
 
@@ -115,7 +115,7 @@ pipeline {
 
         }
 
-        def createFolder(name, folderName){
+        def createFolder(String name, String folderName){
             println("inicio createFolder")
 
             def file = new File("build/deploy/riocard/$folderName/$name")
@@ -126,7 +126,7 @@ pipeline {
         }
 
 
-        def createConf(name){
+        def createConf(String name){
             println("inicio createConf")
 
             def file = new File("build/deploy/etc/systemd/system")
@@ -161,7 +161,7 @@ pipeline {
 
         }
 
-        def createPreInst(name){
+        def createPreInst(String name){
             println("inicio createPretInst")
 
             def file = new File("build/deploy/DEBIAN")
@@ -179,7 +179,7 @@ pipeline {
 
         }
 
-        def createPostInst(name){
+        def createPostInst(String name){
             println("inicio createPostInst")
 
             def file = new File("build/deploy/DEBIAN")
@@ -199,7 +199,7 @@ pipeline {
 
         }
 
-        def createPostRM(name){
+        def createPostRM(String name){
             println("inicio createPostRM")
 
             def file = new File("build/deploy/DEBIAN")
