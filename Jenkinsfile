@@ -90,6 +90,8 @@ pipeline {
             }
         }
     }
+
+}
     def createControl(nome, version){
             def dir = new File("build/deploy/DEBIAN/")
 
@@ -188,6 +190,5 @@ pipeline {
             file.append("userdel $name \n")
             file.createNewFile()
         }
-}
 
 // vim: syntax=groovy
