@@ -96,6 +96,7 @@ pipeline {
 
 }
     def createControl(nome, version){
+            println("inicio createControl")
             def dir = new File("build/deploy/DEBIAN/")
 
             if(!dir.exists()){
@@ -110,17 +111,24 @@ pipeline {
             dir.append("Homepage: https://www.riocardmais.com.br\n")
             dir.append("Description: Aplicação $nome")
             dir.createNewFile()
+            println("fim createControl")
+
         }
 
         def createFolder(name, folderName){
+            println("inicio createFolder")
+
             def file = new File("build/deploy/riocard/$folderName/$name")
             if(!file.exists()){
                 file.mkdirs()
             }
+            println("fim createFolder")
         }
 
 
         def createConf(name){
+            println("inicio createConf")
+
             def file = new File("build/deploy/etc/systemd/system")
 
             if(!file.exists()){
@@ -149,9 +157,13 @@ pipeline {
             file.append("[Install]\n")
             file.append("WantedBy=multi-user.target\n")
             file.createNewFile()
+            println("fim createConf")
+
         }
 
         def createPreInst(name){
+            println("inicio createPretInst")
+
             def file = new File("build/deploy/DEBIAN")
             if(!file.exists()){
                 file.mkdirs()
@@ -163,9 +175,13 @@ pipeline {
             file.append("    useradd -s /bin/false -d /riocard/msa/$name --system $name \n")
             file.append("fi\n")
             file.createNewFile()
+            println("fim createPreInst")
+
         }
 
         def createPostInst(name){
+            println("inicio createPostInst")
+
             def file = new File("build/deploy/DEBIAN")
             if(!file.exists()){
                 file.mkdirs()
@@ -179,9 +195,13 @@ pipeline {
             file.append("systemctl start $name \n")
             file.append("systemctl daemon-reload \n")
             file.createNewFile()
+                        println("fim createPostInst")
+
         }
 
         def createPostRM(name){
+            println("inicio createPostRM")
+
             def file = new File("build/deploy/DEBIAN")
             if(!file.exists()){
                 file.mkdirs()
@@ -192,6 +212,8 @@ pipeline {
             file.append("systemctl disable  $name \n")
             file.append("userdel $name \n")
             file.createNewFile()
+                        println("fim createPostRM")
+
         }
 
 // vim: syntax=groovy
