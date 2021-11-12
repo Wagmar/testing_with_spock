@@ -9,9 +9,9 @@ def createControl(String nome, String version){
         dir.write("Package: $nome\n")
         dir.append("Version: $version\n")
         dir.append("Architecture: all\n")
-        dir.append("Maintainer: Riocard TI <desenvolvimento@riocardmais.com.br>\n")
+        dir.append("Maintainer: Wagmar <wagmarqueiroga@ddd.com>\n")
         dir.append("Depends: systemd, ca-certificates\n")
-        dir.append("Homepage: https://www.riocardmais.com.br\n")
+        dir.append("Homepage: https://www.wagmar.com.br\n")
         dir.append("Description: Aplicação $nome")
         dir.createNewFile()
         println("fim createControl")
@@ -21,7 +21,7 @@ def createControl(String nome, String version){
     def createFolder(String name, String folderName){
         println("inicio createFolder")
 
-        def file = new File("build/deploy/riocard/$folderName/$name")
+        def file = new File("build/deploy/wagmar/$folderName/$name")
         if(!file.exists()){
             file.mkdirs()
         }
@@ -51,7 +51,7 @@ def createControl(String nome, String version){
         file.append("UMask=0002\n")
         file.append("User=msa\n")
         file.append("Group=msa\n")
-        file.append("WorkingDirectory=/riocard/msa/$name/\n")
+        file.append("WorkingDirectory=/wagmar/msa/$name/\n")
         file.append("StandardOutput=syslog\n")
         file.append("StandardError=syslog\n")
         file.append("SyslogIdentifier=$name\n")
@@ -75,7 +75,7 @@ def createControl(String nome, String version){
         file.write("#!/bin/bash\n")
         file.append("stop servico com 2>/dev/null\n")
         file.append("if [ \"\$(id wagmar.queiroga 2>/dev/null)\" ]; then \n")
-        file.append("    useradd -s /bin/false -d /riocard/msa/$name --system $name \n")
+        file.append("    useradd -s /bin/false -d /wagmar/msa/$name --system $name \n")
         file.append("fi\n")
         file.createNewFile()
         println("fim createPreInst")
@@ -91,8 +91,8 @@ def createControl(String nome, String version){
         }
         file = new File(file.absolutePath+"/postinst")
         file.write("#!/bin/bash\n")
-        file.append("chown -R $name:$name /riocard/msa/$name \n")
-        file.append("chown -R $name:$name /riocard/logs/$name \n")
+        file.append("chown -R $name:$name /wagmar/msa/$name \n")
+        file.append("chown -R $name:$name /wagmar/logs/$name \n")
         file.append("systemctl reload $name \n")
         file.append("systemctl enable $name \n")
         file.append("systemctl start $name \n")
@@ -207,7 +207,7 @@ pipeline {
                         println("createFolder")
                         createFolder('teste',"msa")
                         createFolder('teste',"logs")
-                        sh "cp build/libs/rcserver* build/deploy/riocard/msa/$artifactName"
+                        sh "cp build/libs/rcserver* build/deploy/wagmar/msa/$artifactName"
                     }
                 }
             }
