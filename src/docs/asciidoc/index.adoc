@@ -1,5 +1,5 @@
 = Exemplo API Com spockframework
-@username@ <dev@riocard.com>
+@username@ <dev@wagmar.com>
 v@project-version@
 :doctype: book
 :icons: font
